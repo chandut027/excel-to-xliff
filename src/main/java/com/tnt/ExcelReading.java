@@ -37,21 +37,21 @@ public class ExcelReading {
             }
         }
     }
-
     /**
      * @param args
      *            the command line arguments
      */
     public static void main(String[] args) {
 
-        String fileName = "en_gb-track.xls";
+        String fileName = args[0];
         String lang = getLocale(fileName);
+        System.out.println(fileName);
         InputStream inp = null;
         try {
-            File fout = new File("/Users/chandu/Documents/poc/cq-jsp-scripts/excel-to-xliff/en_gb.dict.xliff");
+            File fout = new File("target/"+lang+".dict.xliff");
             FileOutputStream fos = new FileOutputStream(fout);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-            inp = new FileInputStream("/Users/chandu/Documents/poc/cq-jsp-scripts/excel-to-xliff/en_gb-track.xls");
+            inp = new FileInputStream(fileName);
             Workbook wb = WorkbookFactory.create(inp);
             bw.write("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
             bw.newLine();
@@ -87,16 +87,16 @@ public class ExcelReading {
 
     private static String getLocale(String fileName) {
 
-        String localePatternStr = "/[a-zA-Z]{2,2}+_+[a-zA-Z]{2,2}/";
-
+        String localePatternStr = "/[a-z]{2,2}+_+[a-z]{2,2}/";
         // Compile Regex expression
         Pattern localePattern = Pattern.compile(localePatternStr);
-
         // Match locale+directory pattern in original URL
         Matcher localeMatcher = localePattern.matcher(fileName);
         String urlLocal ="en-gb";
         if (localeMatcher.find()) {
+            
             urlLocal  = localeMatcher.group(1);
+            System.out.println("local" + urlLocal);
         }
 
         return urlLocal;
