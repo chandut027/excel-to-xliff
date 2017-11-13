@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- ====================================================================== -->
+	<!-- P A R E N T P R O J E C T D E S C R I P T I O N -->
+	<!-- ====================================================================== -->
+	<!-- <parent> <groupId>com.log.report.general</groupId> <artifactId>report-general</artifactId> 
+		<version>1.0.0-SNAPSHOT</version> </parent> -->
+
+	<!-- ====================================================================== -->
+	<!-- P R O J E C T D E S C R I P T I O N -->
+	<!-- ====================================================================== -->
+	<groupId>com.script.excel</groupId>
+
+	<artifactId>script.excel-core</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+	<name>script.excel-core</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.language>java</sonar.language>
+	</properties>
+	<!-- ====================================================================== -->
+	<!-- B U I L D D E F I N I T I O N -->
+	<!-- ====================================================================== -->
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!-- use version 2.3.2 to have java 1.5 as the default -->
+				<version>3.3</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-scr-plugin</artifactId>
+				<version>1.9.0</version>
+				<executions>
+					<execution>
+						<id>generate-scr-descriptor</id>
+						<goals>
+							<goal>scr</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.3.6</version>
+				<extensions>true</extensions>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<instructions>
+						<Bundle-Name>Foundation Report Core</Bundle-Name>
+						<Bundle-SymbolicName>com.logs.report.general</Bundle-SymbolicName>
+
+						<Export-Package>
+							com.logs.report.general.*,org.apache.http.*
+						</Export-Package>
+
+
+					</instructions>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.17</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>3.17</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>adobe</id>
+			<name>Adobe Public Repository</name>
+			<url>https://repo.adobe.com/nexus/content/groups/public/</url>
+			<layout>default</layout>
+		</repository>
+
+		<repository>
+			<id>jboss-3rd-party-releases</id>
+			<url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>adobe</id>
+			<name>Adobe Public Repository</name>
+			<url>https://repo.adobe.com/nexus/content/groups/public/</url>
+			<layout>default</layout>
+		</pluginRepository>
+	</pluginRepositories>
+
+</project>
