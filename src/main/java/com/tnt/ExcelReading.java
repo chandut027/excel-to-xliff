@@ -43,15 +43,23 @@ public class ExcelReading {
      */
     public static void main(String[] args) {
 
-        String fileName = args[0];
-        String lang = getLocale(fileName);
-        System.out.println(fileName);
+        String rootPath = "/Users/chandu/Documents/poc/cq-jsp-scripts/excel-to-xliff";
+        
+        File file = new File(rootPath + "/TracK_xls");
         InputStream inp = null;
+        for (final File fileEntry : file.listFiles()) {
+            if (!fileEntry.isDirectory()) {
+                convertXliff(rootPath, fileEntry, getLocale(fileEntry.getName()), inp);
+            } 
+        }
+        
+    }
+    private static void convertXliff(String rootPath, File file, String lang, InputStream inp) {
         try {
-            File fout = new File("target/"+lang+".dict.xliff");
+            File fout = new File(rootPath+"/xliffs/"+lang+".dict.xliff");
             FileOutputStream fos = new FileOutputStream(fout);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-            inp = new FileInputStream(fileName);
+            inp = new FileInputStream(file);
             Workbook wb = WorkbookFactory.create(inp);
             bw.write("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
             bw.newLine();
@@ -87,7 +95,7 @@ public class ExcelReading {
 
     private static String getLocale(String fileName) {
 
-        String localePatternStr = "/[a-z]{2,2}+_+[a-z]{2,2}/";
+        String localePatternStr = "[a-z]{2,2}_[a-z]{2,2}";
         // Compile Regex expression
         Pattern localePattern = Pattern.compile(localePatternStr);
         // Match locale+directory pattern in original URL
@@ -95,10 +103,10 @@ public class ExcelReading {
         String urlLocal ="en-gb";
         if (localeMatcher.find()) {
             
-            urlLocal  = localeMatcher.group(1);
-            System.out.println("local" + urlLocal);
+            urlLocal  = localeMatcher.group();
+            System.out.println("local: " + urlLocal);
         }
 
-        return urlLocal;
+        return urlLocal.replace("_", "-");
     }
 }
